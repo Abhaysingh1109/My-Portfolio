@@ -317,11 +317,13 @@ p {
   color: var(--muted);
 }
 
-.hero-visual {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  perspective: 1200px;
+.hero-photo {
+  width: min(520px, 80vw);
+  max-height: 520px;
+  justify-self: center;
+  border-radius: 32px;
+  object-fit: cover;
+  box-shadow: var(--shadow);
 }
 
 .visual-scene {
@@ -551,6 +553,14 @@ p {
 .exp-header h4 {
   font-size: clamp(1.2rem, 2vw, 1.8rem);
   margin-top: 0.3rem;
+}
+
+.exp-company {
+  margin: 0.35rem 0 0;
+  color: var(--muted-strong);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 .timeline-tag {
@@ -1005,8 +1015,8 @@ p {
     padding-top: 2rem;
   }
 
-  .visual-scene {
-    height: 420px;
+  .hero-photo {
+    max-height: 420px;
   }
 }
 
