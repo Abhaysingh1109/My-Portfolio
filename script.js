@@ -109,15 +109,6 @@ const counterObserver = new IntersectionObserver(
 
 counters.forEach((counter) => counterObserver.observe(counter));
 
-const heroVisual = document.querySelector(".visual-scene");
-if (heroVisual) {
-  document.addEventListener("pointermove", (event) => {
-    const x = (event.clientX / window.innerWidth - 0.5) * 18;
-    const y = (event.clientY / window.innerHeight - 0.5) * 18;
-    heroVisual.style.transform = `rotateX(${(-y).toFixed(2)}deg) rotateY(${x.toFixed(2)}deg)`;
-  });
-}
-
 const canvas = document.getElementById("space-bg");
 const ctx = canvas.getContext("2d");
 let stars = [];
