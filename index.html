@@ -11,23 +11,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <canvas id="space-bg"></canvas>
-    <div class="page-glow glow-one"></div>
-    <div class="page-glow glow-two"></div>
-
     <header class="site-header">
       <nav class="nav container">
         <a href="#home" class="brand" aria-label="Go to home section">
           <span class="brand-mark">
             <img src="image/my_image.png" alt="" />
           </span>
-          <span class="brand-text">Abhay</span>
+          <span class="brand-text">Abhay Pratap Singh</span>
         </a>
 
         <div class="nav-links">
@@ -49,11 +45,9 @@
       <section id="home" class="hero section">
         <div class="container hero-grid">
           <div class="hero-copy reveal">
-            <p class="eyebrow">
-              Data Science • Machine Learning • Software Development
-            </p>
-            <h1>Hi, I’m <span>Abhay Pratap Singh</span></h1>
-            <h2>Data Scientist | Frontend Developer | Software Developer</h2>
+            <p class="hero-overline">Portfolio · Parma, Italy</p>
+            <h1>Abhay Pratap <span>Singh</span></h1>
+            <h2>Software engineering &amp; applied data science</h2>
             <p class="lead">
               I am passionate about data science, machine learning, artificial
               intelligence, and building intelligent software solutions that
@@ -71,34 +65,26 @@
               </a>
             </div>
 
-            <div class="hero-metrics">
-              <div>
-                <strong data-count="1">0</strong>
-                <span>+ Years</span>
-              </div>
-              <div>
-                <strong data-count="5">0</strong>
-                <span>Projects</span>
-              </div>
-              <div>
-                <strong data-count="5">0</strong>
-                <span>Certifications</span>
-              </div>
-            </div>
+            <p class="hero-index">
+              <span>Current focus</span> Machine learning · Analytics ·
+              Intelligent software
+            </p>
           </div>
 
-          <img
-            class="hero-photo reveal"
-            src="image/my_image.png"
-            alt="Abhay Pratap Singh"
-          />
+          <div class="hero-photo-wrap">
+            <img
+              class="hero-photo reveal"
+              src="image/my_image.png"
+              alt="Abhay Pratap Singh"
+            />
+            <span class="photo-note">Abhay Pratap Singh · Portrait</span>
+          </div>
         </div>
       </section>
 
       <section id="about" class="section">
         <div class="container">
           <div class="section-heading reveal">
-            <p class="eyebrow">About Me</p>
             <h3>
               Building intelligent systems with clarity, curiosity, and impact.
             </h3>
@@ -166,7 +152,6 @@
       <section id="skills" class="section">
         <div class="container">
           <div class="section-heading reveal">
-            <p class="eyebrow">Core Skills</p>
             <h3>Tools, models, systems, and product thinking in one stack.</h3>
           </div>
 
@@ -200,7 +185,6 @@
                 <span>HTML</span>
                 <span>CSS</span>
                 <span>Angular</span>
-                
               </div>
             </div>
 
@@ -220,7 +204,6 @@
       <section id="experience" class="section">
         <div class="container">
           <div class="section-heading reveal">
-            <p class="eyebrow">Experience</p>
             <h3>
               Career journey across intelligent systems and product development.
             </h3>
@@ -234,7 +217,11 @@
                   <h4>MSc Data Science for Management — Student</h4>
                   <p class="exp-company">University of Parma</p>
                 </div>
-                <button class="exp-toggle" aria-label="Toggle details">
+                <button
+                  class="exp-toggle"
+                  aria-label="Toggle details for MSc Data Science for Management"
+                  aria-expanded="true"
+                >
                   +
                 </button>
               </div>
@@ -277,7 +264,11 @@
                   <h4>Frontend Developer</h4>
                   <p class="exp-company">CNH Industrial</p>
                 </div>
-                <button class="exp-toggle" aria-label="Toggle details">
+                <button
+                  class="exp-toggle"
+                  aria-label="Toggle details for Frontend Developer"
+                  aria-expanded="false"
+                >
                   +
                 </button>
               </div>
@@ -320,7 +311,11 @@
                   <h4>Web developer Intern</h4>
                   <p class="exp-company">Two waits Technologies</p>
                 </div>
-                <button class="exp-toggle" aria-label="Toggle details">
+                <button
+                  class="exp-toggle"
+                  aria-label="Toggle details for Web developer Intern"
+                  aria-expanded="false"
+                >
                   +
                 </button>
               </div>
@@ -364,7 +359,6 @@
       <section id="projects" class="section">
         <div class="container">
           <div class="section-heading reveal">
-            <p class="eyebrow">Featured Projects</p>
             <h3>
               Applied AI, data systems, and human-centered product design.
             </h3>
@@ -443,6 +437,25 @@
 
             <article class="project-card reveal">
               <div class="project-visual project-three">
+                <svg
+                  viewBox="0 0 320 180"
+                  role="img"
+                  aria-label="Illustrative forecasting trend line"
+                >
+                  <path
+                    d="M0 45H320M0 90H320M0 135H320"
+                    fill="none"
+                    stroke="#a8aaa0"
+                    stroke-width="1"
+                  />
+                  <path
+                    d="M0 145 53 120 104 131 161 83 213 96 267 44 320 27"
+                    fill="none"
+                    stroke="#b9462d"
+                    stroke-width="3"
+                  />
+                  <circle cx="320" cy="27" r="4" fill="#b9462d" />
+                </svg>
                 <span>Accounting</span>
               </div>
               <div class="project-body">
@@ -480,7 +493,6 @@
       <section id="achievements" class="section">
         <div class="container">
           <div class="section-heading reveal">
-            <p class="eyebrow">Achievements</p>
             <h3>Milestones, recognition, and impactful outcomes.</h3>
           </div>
 
@@ -539,7 +551,6 @@
       <section id="education" class="section">
         <div class="container">
           <div class="section-heading reveal">
-            <p class="eyebrow">Education</p>
             <h3>Academic foundation and continuous learning.</h3>
           </div>
 
@@ -549,7 +560,7 @@
               <div class="edu-content">
                 <h4>MSc – Data Science for Management</h4>
                 <p>
-                <b>Università degli Studi di Parma, Italy</b>
+                  <b>Università degli Studi di Parma, Italy</b>
                 </p>
                 <span
                   >Advanced study in analytics, business intelligence, and
@@ -565,7 +576,12 @@
                 <p>
                   <b>Parul University, India</b>
                 </p>
-                <span> Strong foundation in computer science, programming, software development, and analytical problem-solving, with hands-on experience in developing technical solutions and applying computational concepts to real-world problems.</span>
+                <span>
+                  Strong foundation in computer science, programming, software
+                  development, and analytical problem-solving, with hands-on
+                  experience in developing technical solutions and applying
+                  computational concepts to real-world problems.</span
+                >
               </div>
             </div>
           </div>
@@ -575,10 +591,12 @@
       <section class="section resume-section">
         <div class="container resume-card reveal">
           <div>
-            <p class="eyebrow">Resume</p>
             <h3>Want to know more about my journey?</h3>
           </div>
-          <a href="assets/Abhay_Resume.pdf" class="btn btn-primary" download
+          <a
+            href="assets/ABHAY%20PRATAP%20SINGH.pdf"
+            class="btn btn-primary"
+            download
             >Download Resume</a
           >
         </div>
@@ -587,12 +605,13 @@
       <section id="contact" class="section contact-section">
         <div class="container contact-grid">
           <div class="contact-info reveal">
-            <p class="eyebrow">Contact</p>
             <h3>Let’s build something intelligent together.</h3>
             <ul>
               <li>
                 <span>Email</span
-                ><a href="mailto:abhay@example.com">abhaypratapsing.1109@gmail.com</a>
+                ><a href="mailto:abhaypratapsing1109@gmail.com"
+                  >abhaypratapsing1109@gmail.com</a
+                >
               </li>
               <li>
                 <span>LinkedIn</span
@@ -609,7 +628,28 @@
             </ul>
           </div>
 
-          <form class="contact-form glass-panel reveal" id="contactForm">
+          <form
+            class="contact-form glass-panel reveal"
+            id="contactForm"
+            action="https://formspree.io/f/YOUR_FORM_ID"
+            method="POST"
+          >
+            <div
+              class="form-status form-status-success"
+              data-fs-success
+              role="status"
+              aria-live="polite"
+            >
+              Thanks for reaching out. Your message has been sent.
+            </div>
+            <div
+              class="form-status form-status-error"
+              data-fs-error
+              role="alert"
+              aria-live="assertive"
+            >
+              Your message could not be sent. Please try again.
+            </div>
             <div class="form-field">
               <label for="name">Name</label>
               <input
@@ -618,6 +658,7 @@
                 name="name"
                 placeholder="Your name"
                 required
+                data-fs-field
               />
             </div>
             <div class="form-field">
@@ -628,6 +669,7 @@
                 name="email"
                 placeholder="Your email"
                 required
+                data-fs-field
               />
             </div>
             <div class="form-field">
@@ -638,9 +680,15 @@
                 rows="5"
                 placeholder="Tell me about your idea..."
                 required
+                data-fs-field
               ></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Send Message</button>
+            <button type="submit" class="btn btn-primary" data-fs-submit-btn>
+              Send message
+            </button>
+            <p class="form-note" id="formNote" aria-live="polite">
+              Your name, email, and message will be sent to Abhay.
+            </p>
           </form>
         </div>
       </section>
@@ -654,5 +702,6 @@
     </footer>
 
     <script src="script.js"></script>
+    <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
   </body>
 </html>
