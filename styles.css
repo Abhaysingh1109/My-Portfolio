@@ -19,6 +19,8 @@
 html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
 body {
   margin: 0;
+  min-width: 320px;
+  overflow-x: hidden;
   background: var(--paper);
   color: var(--ink);
   font-family: var(--sans);
@@ -45,7 +47,7 @@ a:hover { color: var(--accent-dark); }
 .brand-mark { width: 32px; height: 32px; overflow: hidden; border-radius: 50%; background: var(--sage); }
 .brand-mark img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; }
 .nav-links { display: flex; align-items: center; justify-content: center; flex: 1; gap: clamp(.65rem, 1.5vw, 1.35rem); }
-.nav-links a { position: relative; color: var(--muted); font-size: .81rem; white-space: nowrap; text-decoration: none; transition: color 180ms ease; }
+.nav-links a { position: relative; min-height: 44px; display: inline-flex; align-items: center; color: var(--muted); font-size: .81rem; white-space: nowrap; text-decoration: none; transition: color 180ms ease; }
 .nav-links a::after { position: absolute; content: ""; height: 1px; left: 0; right: 0; bottom: -.3rem; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 180ms ease; }
 .nav-links a:hover, .nav-links a.active { color: var(--ink); }
 .nav-links a.active::after, .nav-links a:hover::after { transform: scaleX(1); }
@@ -114,7 +116,7 @@ p { color: var(--muted); }
 .exp-header h4 { margin: .45rem 0 .25rem; font-size: clamp(1.15rem, 2vw, 1.55rem); }
 .timeline-tag { color: var(--accent-dark); }
 .exp-company { margin: 0; color: var(--muted); font-size: .9rem; }
-.exp-toggle { width: 40px; height: 40px; flex: 0 0 40px; border: 1px solid var(--rule); border-radius: 50%; background: transparent; color: var(--ink); cursor: pointer; font-size: 0; transition: background 180ms ease, border-color 180ms ease, transform 180ms var(--ease-out); }
+.exp-toggle { width: 44px; height: 44px; flex: 0 0 44px; border: 1px solid var(--rule); border-radius: 50%; background: transparent; color: var(--ink); cursor: pointer; font-size: 0; transition: background 180ms ease, border-color 180ms ease, transform 180ms var(--ease-out); }
 .exp-toggle::after { content: "+"; display: block; font-size: 1.25rem; line-height: 1; }
 .exp-card.active .exp-toggle::after { content: "−"; }
 .exp-toggle:hover { background: var(--sage); border-color: var(--ink); }
@@ -213,19 +215,33 @@ p { color: var(--muted); }
   .nav-cta { display: none; }
   .hero-photo-wrap { min-height: 500px; }
 }
+@media (max-width: 900px) and (min-width: 761px) {
+  .container { width: min(100% - 3rem, var(--max-width)); }
+  .nav { align-items: flex-start; flex-wrap: wrap; padding: .8rem 0; }
+  .nav-links { order: 3; flex-basis: 100%; justify-content: flex-start; overflow-x: auto; }
+  .hero { min-height: auto; padding: 3rem 0 5rem; }
+  .hero-grid, .about-grid, .achievement-layout, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .hero-copy { max-width: 760px; padding: 1rem 0 0; }
+  .hero-photo-wrap { min-height: 460px; max-height: 600px; }
+  .skills-grid { column-gap: 3rem; }
+}
 @media (max-width: 760px) {
   .container { width: min(100% - 2rem, var(--max-width)); }
-  .nav { min-height: 64px; display: block; padding-top: .7rem; }
+  .nav { min-height: 64px; display: block; padding-top: .45rem; }
   .brand { height: 34px; }
-  .nav-links { justify-content: flex-start; gap: 1rem; margin: .45rem 0 .7rem; }
+  .nav-links { justify-content: flex-start; gap: .75rem; margin: .25rem -1rem .45rem; padding: 0 1rem; overscroll-behavior-x: contain; }
   .nav-links a { font-size: .78rem; }
   .section { padding: 5.2rem 0; }
   .hero { min-height: auto; padding: 1rem 0 3rem; }
   .hero-grid { grid-template-columns: 1fr; gap: 1rem; }
   .hero-copy { padding: 2.2rem 0 1rem; }
-  h1 { max-width: 7ch; font-size: clamp(4.25rem, 16vw, 7rem); }
-  .hero-photo-wrap { min-height: 390px; max-height: 500px; }
+  h1 { max-width: 7ch; font-size: clamp(3.7rem, 16vw, 6rem); }
+  h2 { font-size: 1.05rem; }
+  .lead { font-size: .98rem; }
+  .hero-photo-wrap { min-height: min(110vw, 460px); max-height: 500px; }
   .hero-photo { max-height: 500px; }
+  .hero-actions { align-items: stretch; flex-direction: column; max-width: 22rem; }
+  .btn { width: 100%; min-height: 48px; }
   .hero-index { flex-direction: column; gap: .25rem; margin-top: 2rem; }
   .section-heading { display: block; margin-bottom: 2rem; }
   .section-heading h3 { font-size: clamp(2.7rem, 12vw, 4rem); }
@@ -238,6 +254,20 @@ p { color: var(--muted); }
   .resume-card { align-items: flex-start; flex-direction: column; }
   .resume-card h3 { font-size: 2.6rem; }
   .footer-inner { flex-direction: column; }
+}
+@media (max-width: 420px) {
+  .container { width: min(100% - 1.5rem, var(--max-width)); }
+  .nav-links { margin-left: -.75rem; margin-right: -.75rem; padding-left: .75rem; padding-right: .75rem; }
+  .section { padding: 4.25rem 0; }
+  .hero { padding-top: .5rem; }
+  .hero-copy { padding-top: 1.5rem; }
+  h1 { font-size: clamp(3.25rem, 17vw, 4.7rem); }
+  .section-heading h3 { font-size: clamp(2.35rem, 12vw, 3.25rem); }
+  .hero-index { font-size: .75rem; }
+  .project-body h4 { font-size: 1.75rem; }
+  .edu-item { grid-template-columns: 1fr; gap: .35rem; }
+  .edu-year { padding-top: 0; }
+  .resume-card h3 { font-size: 2.2rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
