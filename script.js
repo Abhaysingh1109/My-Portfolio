@@ -1,201 +1,112 @@
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+if (!prefersReducedMotion.matches) document.documentElement.classList.add("js");
+
 const header = document.querySelector(".site-header");
 const navLinks = document.querySelectorAll(".nav-links a");
-const revealItems = document.querySelectorAll(".reveal");
+const revealItems = document.querySelectorAll(".hero-copy, .hero-photo, .project-card");
 const expCards = document.querySelectorAll(".exp-card");
-const projectCards = document.querySelectorAll(".project-card");
 const counters = document.querySelectorAll("[data-count]");
 const contactForm = document.getElementById("contactForm");
+const formNote = document.getElementById("formNote");
 const yearEl = document.getElementById("year");
+const formspreeFormId = "YOUR_FORM_ID";
 
-if (yearEl) {
-  yearEl.textContent = new Date().getFullYear();
-}
+if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 30) {
-    header.classList.add("scrolled");
-  } else {
-    header.classList.remove("scrolled");
-  }
-});
-
-const observer = new IntersectionObserver(
-  (entries) => {
+if ("IntersectionObserver" in window) {
+  const revealObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("visible");
         observer.unobserve(entry.target);
       }
     });
-  },
-  { threshold: 0.18 },
-);
+  }, { threshold: 0.12 });
 
-revealItems.forEach((item) => observer.observe(item));
+  revealItems.forEach((item) => revealObserver.observe(item));
 
-const sectionObserver = new IntersectionObserver(
-  (entries) => {
+  const navObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        navLinks.forEach((link) => {
-          const targetId = link.getAttribute("href").replace("#", "");
-          link.classList.toggle("active", targetId === entry.target.id);
-        });
-      }
+      if (!entry.isIntersecting) return;
+      navLinks.forEach((link) => {
+        link.classList.toggle("active", link.getAttribute("href") === `#${entry.target.id}`);
+      });
     });
-  },
-  { threshold: 0.55 },
-);
+  }, { rootMargin: "-32% 0px -62% 0px", threshold: 0 });
 
-const sections = document.querySelectorAll("main section[id]");
-sections.forEach((section) => sectionObserver.observe(section));
+  document.querySelectorAll("main section[id]").forEach((section) => navObserver.observe(section));
+
+  if (!prefersReducedMotion.matches) {
+    const counterObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const element = entry.target;
+        const target = Number(element.dataset.count || 0);
+        const start = performance.now();
+        const duration = 650;
+
+        const update = (now) => {
+          const progress = Math.min(1, (now - start) / duration);
+          element.textContent = Math.round(target * progress);
+          if (progress < 1) requestAnimationFrame(update);
+        };
+
+        requestAnimationFrame(update);
+        observer.unobserve(element);
+      });
+    }, { threshold: 0.6 });
+
+    counters.forEach((counter) => counterObserver.observe(counter));
+  } else {
+    counters.forEach((counter) => { counter.textContent = counter.dataset.count || "0"; });
+  }
+} else {
+  revealItems.forEach((item) => item.classList.add("visible"));
+  counters.forEach((counter) => { counter.textContent = counter.dataset.count || "0"; });
+}
+
+if (header) {
+  let ticking = false;
+  window.addEventListener("scroll", () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      header.classList.toggle("scrolled", window.scrollY > 24);
+      ticking = false;
+    });
+  }, { passive: true });
+}
 
 expCards.forEach((card) => {
   const toggle = card.querySelector(".exp-toggle");
+  if (!toggle) return;
+
   toggle.addEventListener("click", () => {
-    const isOpen = card.classList.contains("active");
+    const shouldOpen = !card.classList.contains("active");
     expCards.forEach((item) => {
       item.classList.remove("active");
+      item.querySelector(".exp-toggle")?.setAttribute("aria-expanded", "false");
     });
-    if (!isOpen) {
+    if (shouldOpen) {
       card.classList.add("active");
+      toggle.setAttribute("aria-expanded", "true");
     }
   });
 });
 
-projectCards.forEach((card) => {
-  card.addEventListener("mousemove", (event) => {
-    const rect = card.getBoundingClientRect();
-    const px = (event.clientX - rect.left) / rect.width;
-    const py = (event.clientY - rect.top) / rect.height;
-    const rotateY = (px - 0.5) * 18;
-    const rotateX = (0.5 - py) * 18;
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
-  });
-
-  card.addEventListener("mouseleave", () => {
-    card.style.transform =
-      "perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)";
-  });
-});
-
-const animateCounter = (element) => {
-  const target = Number(element.dataset.count || 0);
-  let current = 0;
-  const step = Math.max(1, Math.ceil(target / 50));
-
-  const interval = setInterval(() => {
-    current += step;
-    if (current >= target) {
-      element.textContent = target;
-      clearInterval(interval);
-      return;
-    }
-    element.textContent = current;
-  }, 24);
-};
-
-const counterObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        animateCounter(entry.target);
-        counterObserver.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.6 },
-);
-
-counters.forEach((counter) => counterObserver.observe(counter));
-
-const canvas = document.getElementById("space-bg");
-const ctx = canvas.getContext("2d");
-let stars = [];
-let shootingStars = [];
-
-const resizeCanvas = () => {
-  canvas.width = window.innerWidth * window.devicePixelRatio;
-  canvas.height = window.innerHeight * window.devicePixelRatio;
-  canvas.style.width = `${window.innerWidth}px`;
-  canvas.style.height = `${window.innerHeight}px`;
-  ctx.setTransform(
-    window.devicePixelRatio,
-    0,
-    0,
-    window.devicePixelRatio,
-    0,
-    0,
-  );
-  stars = Array.from({ length: 180 }, () => ({
-    x: Math.random() * window.innerWidth,
-    y: Math.random() * window.innerHeight,
-    r: Math.random() * 2.2 + 0.4,
-    alpha: Math.random() * 0.9 + 0.1,
-    speed: Math.random() * 0.4 + 0.08,
-  }));
-};
-
-const drawStars = () => {
-  ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-
-  stars.forEach((star) => {
-    star.y += star.speed;
-    if (star.y > window.innerHeight) {
-      star.y = -10;
-      star.x = Math.random() * window.innerWidth;
-    }
-
-    ctx.beginPath();
-    ctx.fillStyle = `rgba(255,255,255,${star.alpha})`;
-    ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
-    ctx.fill();
-  });
-
-  shootingStars.forEach((shootingStar, index) => {
-    shootingStar.x += shootingStar.vx;
-    shootingStar.y += shootingStar.vy;
-    shootingStar.life -= 0.02;
-
-    ctx.beginPath();
-    ctx.strokeStyle = `rgba(255,255,255,${shootingStar.life})`;
-    ctx.lineWidth = 1.5;
-    ctx.moveTo(shootingStar.x, shootingStar.y);
-    ctx.lineTo(shootingStar.x - 30, shootingStar.y - 18);
-    ctx.stroke();
-
-    if (shootingStar.life <= 0) {
-      shootingStars.splice(index, 1);
-    }
-  });
-
-  if (Math.random() < 0.012) {
-    shootingStars.push({
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight * 0.4,
-      vx: 5,
-      vy: 2.3,
-      life: 1,
+if (contactForm) {
+  if (!formspreeFormId || formspreeFormId === "YOUR_FORM_ID") {
+    const submitButton = contactForm.querySelector("[type='submit']");
+    if (submitButton) submitButton.disabled = true;
+    if (formNote) formNote.textContent = "Form delivery needs a Formspree form ID before messages can be sent.";
+  } else {
+    contactForm.action = `https://formspree.io/f/${formspreeFormId}`;
+    window.formspree = window.formspree || function () {
+      (window.formspree.q = window.formspree.q || []).push(arguments);
+    };
+    window.formspree("initForm", {
+      formElement: "#contactForm",
+      formId: formspreeFormId,
     });
   }
-
-  requestAnimationFrame(drawStars);
-};
-
-resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
-requestAnimationFrame(drawStars);
-
-contactForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const submitBtn = contactForm.querySelector("button");
-  const originalText = submitBtn.textContent;
-  submitBtn.textContent = "Message Sent";
-  submitBtn.disabled = true;
-
-  setTimeout(() => {
-    submitBtn.textContent = originalText;
-    submitBtn.disabled = false;
-    contactForm.reset();
-  }, 2000);
-});
+}
